@@ -1,15 +1,15 @@
 package hello.core.order;
 
 import hello.core.discount.DiscountPolicy;
-import hello.core.discount.FIxDiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
 import hello.core.member.MemoryMemberRepository;
-import lombok.RequiredArgsConstructor;
 
 public class OrderServiceImpl implements OrderService{
     private final MemberRepository memberRepository = new MemoryMemberRepository();
-    private final DiscountPolicy discountPolicy = new FIxDiscountPolicy();
+   // private final DiscountPolicy discountPolicy = new FIxDiscountPolicy(); // DIP 위반 FixDiscountPolicy라는 구현 클래스에 의존
+    private DiscountPolicy discountPolicy; // DIP, OCP 해결을 위해서 추상 클래스만 작성 -> 누군가 discountPolicy의 구현체를 대신 주입해줘야함
+
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
         Member member = memberRepository.findById(memberId);
