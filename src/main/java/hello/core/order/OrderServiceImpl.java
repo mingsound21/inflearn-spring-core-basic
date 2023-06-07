@@ -3,12 +3,16 @@ package hello.core.order;
 import hello.core.discount.DiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
-import hello.core.member.MemoryMemberRepository;
 
 public class OrderServiceImpl implements OrderService{
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
+    private final MemberRepository memberRepository;
    // private final DiscountPolicy discountPolicy = new FIxDiscountPolicy(); // DIP 위반 FixDiscountPolicy라는 구현 클래스에 의존
     private DiscountPolicy discountPolicy; // DIP, OCP 해결을 위해서 추상 클래스만 작성 -> 누군가 discountPolicy의 구현체를 대신 주입해줘야함
+
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
