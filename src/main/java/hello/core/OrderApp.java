@@ -20,7 +20,7 @@ public class OrderApp {
         memberService.join(member);
 
         // 회원이 1개의 주문 생성
-        Order order = orderService.createOrder(memberId, "itemA", 10000);
+        Order order = orderService.createOrder(memberId, "itemA", 20000);
 
         System.out.println("order = " + order);// Order 객체의 toString
         System.out.println("order.calculatePrice() = " + order.calculatePrice()); // 할인까지 적용되어 유저가 내야하는 가격
